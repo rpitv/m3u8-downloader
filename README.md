@@ -2,7 +2,7 @@
 Tool used for downloading m3u8 files into a single-file video format.
 
 ## Work in progress
-This program will not yet work if you compile and try to run it. If you need something immediately, get in contact for me for a Windows-only solution.
+This program will not yet work if you compile and try to run it. If you need something immediately, take a look at https://github.com/rpitv/m3u8-downloader/blob/master/rpitv-downloader-example.bat
 
 ## Usage
 Initial theory for usage:
