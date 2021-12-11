@@ -1,30 +1,44 @@
 package tv.rpi.m3u8;
 
-import org.apache.logging.log4j.Level;
+import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import tv.rpi.m3u8.common.IFfmpegHandler;
+import tv.rpi.m3u8.common.AbstractFfmpegHandler;
+import tv.rpi.m3u8.linux.LinuxFfmpegHandler;
+import tv.rpi.m3u8.macos.MacOsFfmpegHandler;
 
 import java.io.IOException;
 import java.util.Locale;
 
 public class Main {
 
-    public static Logger logger = LogManager.getLogger();
+    public static Logger LOGGER = LogManager.getLogger();
 
     public static void main(String[] args) {
+//        MacOsFfmpegHandler macTest = new MacOsFfmpegHandler();
+//        try {
+//            macTest.install();
+//        } catch (IOException | ArchiveException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if(true) {
+//            return;
+//        }
+
         final OperatingSystem os = Main.getOperatingSystem();
-        IFfmpegHandler ffmpeg = IFfmpegHandler.getForOperatingSystem(os);
+        AbstractFfmpegHandler ffmpeg = AbstractFfmpegHandler.getForOperatingSystem(os);
         try {
             if(!ffmpeg.isFfmpegInstalled()) {
-                logger.fatal("ffmpeg is not installed!");
+                LOGGER.fatal("ffmpeg is not installed!");
+                ffmpeg.install();
                 System.exit(1);
                 return;
             }
 
             String path = ffmpeg.getFfmpegPath();
-            logger.debug("ffmpeg path: {}", path);
-        } catch (IOException | InterruptedException e) {
+            LOGGER.debug("ffmpeg path: {}", path);
+        } catch (IOException | InterruptedException | ArchiveException e) {
             e.printStackTrace();
         }
     }

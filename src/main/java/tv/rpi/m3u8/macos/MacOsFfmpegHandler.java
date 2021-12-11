@@ -1,4 +1,4 @@
-package tv.rpi.m3u8.linux;
+package tv.rpi.m3u8.macos;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 
-public class LinuxFfmpegHandler extends AbstractFfmpegHandler {
+public class MacOsFfmpegHandler extends AbstractFfmpegHandler {
     @Override
     public boolean isFfmpegInstalled() throws IOException, InterruptedException {
         return this.getFfmpegPath() != null;
@@ -35,37 +35,31 @@ public class LinuxFfmpegHandler extends AbstractFfmpegHandler {
         System.out.println("Beginning download of ffmpeg...");
         Main.LOGGER.info("Beginning download of ffmpeg...");
 
-        final String downloadZipPath = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz";
+        final String downloadZipPath = "https://evermeet.cx/ffmpeg/getrelease/zip";
         final String destinationFolder = FileUtils.getTempDirectoryPath() + "m3u8/";
-        final File downloadLocation = new File(destinationFolder + "ffmpeg.tar.xz");
+        final File downloadLocation = new File(destinationFolder + "ffmpeg.zip");
         FileUtils.createParentDirectories(downloadLocation);
         FileUtils.copyURLToFile(new URL(downloadZipPath), downloadLocation, 30000, 30000); // Connection timeout after 10 seconds
 
-        System.out.println("Download complete. Decompressing...");
-        Main.LOGGER.info("Download complete. Decompressing...");
-
-        final File decompressedTar = new File(destinationFolder + "ffmpeg.tar");
-        CompressedFileUtil.decompressXz(downloadLocation, decompressedTar);
-
-        System.out.println("Decompressing complete. Unzipping...");
-        Main.LOGGER.info("Decompressing complete. Unzipping...");
+        System.out.println("Download complete. Unzipping...");
+        Main.LOGGER.info("Download complete. Unzipping...");
 
         final String unzipDestinationPath = destinationFolder + "unzipped";
         final File unzipDestination = new File(unzipDestinationPath);
-        CompressedFileUtil.extractArchive(decompressedTar, unzipDestination, ArchiveStreamFactory.TAR);
+        CompressedFileUtil.extractArchive(downloadLocation, unzipDestination, ArchiveStreamFactory.ZIP);
 
         System.out.println("Unzipped. Installing...");
         Main.LOGGER.info("Unzipped. Installing...");
 
         final Collection<File> unzippedFiles = FileUtils.listFilesAndDirs(unzipDestination,
-                TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+                FalseFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 
         final String installLocationPath = System.getenv("HOME") + "/ffmpeg/";
         final File installLocation = new File(installLocationPath + "bin");
         FileUtils.createParentDirectories(installLocation);
         for(final File f : unzippedFiles) {
             // We want to install these binary files.
-            if(f.getName().equals("ffmpeg") || f.getName().equals("ffprobe")) {
+            if(f.getName().equals("ffmpeg")) {
                 FileUtils.copyFile(f, new File(installLocationPath + "/bin/" + f.getName()));
             }
         }
