@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" skipJansi="false">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%-5p - %msg%n}" disableAnsi="false"/>
+        </Console>
+        <!-- Same as below, except excludes file & line number for each log. These impact performance & readability -->
+        <!-- I have not yet been able to find a better solution than this. -->
+        <RollingFile name="File" fileName=".rpitvlogs/latest.log" filePattern=".rpitvlogs/%d{yyyy-MM-dd}.log.zip">
+            <PatternLayout pattern="%-5p %d{YYYY-MM-dd HH:mm:ss.SSS} [%t]:\t %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath=".rpitvlogs/" maxDepth="1">
+                    <IfFileName glob="*.log.zip" />
+                    <IfLastModified age="14d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <!-- Same as above, except includes file & line number for each log. Used in verbose mode only -->
+        <!-- I have not yet been able to find a better solution than this. -->
+        <RollingFile name="VerboseFile" fileName=".rpitvlogs/latest.log" filePattern=".rpitvlogs/%d{yyyy-MM-dd}.log.zip">
+        <PatternLayout pattern="%-5p %d{YYYY-MM-dd HH:mm:ss.SSS} %C:%L [%t]:\t %msg%n" />
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+        </Policies>
+        <DefaultRolloverStrategy>
+            <Delete basePath=".rpitvlogs/" maxDepth="1">
+                <IfFileName glob="*.log.zip" />
+                <IfLastModified age="14d" />
+            </Delete>
+        </DefaultRolloverStrategy>
+    </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+        <Logger name="tv.rpi.m3u8" level="all" additivity="false">
+            <AppenderRef ref="Console" level="info"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+    </Loggers>
+</Configuration>

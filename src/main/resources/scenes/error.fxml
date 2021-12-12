@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tv.rpi.m3u8.control.Error">
+   <Label styleClass="oswald" text="Error!" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font size="40.0"/>
+      </font>
+   </Label>
+   <ImageView>
+      <Image url="@../images/error.png" requestedWidth="100" requestedHeight="100"/>
+   </ImageView>
+   <Label prefWidth="300.0" text="Something went wrong and we couldn't recover. Ask a developer for more assistance."
+          textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font size="20.0"/>
+      </font>
+   </Label>
+   <Separator maxWidth="400.0">
+      <padding>
+         <Insets top="10" bottom="10"/>
+      </padding>
+   </Separator>
+   <Label text="Error message:" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+   <Label fx:id="errorMsg" text="UNKNOWN" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+</Pane>

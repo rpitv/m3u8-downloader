@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<FlowPane alignment="CENTER" columnHalignment="CENTER" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="tv.rpi.m3u8.control.NoFFmpegInstallation">
+   <VBox alignment="CENTER">
+      <Label styleClass="oswald" prefHeight="150.0" prefWidth="200.0"
+             text="We weren't able to find an ffmpeg installation on this computer. Would you like us to attempt to install it?"
+             textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="18.0"/>
+         </font>
+      </Label>
+      <Button mnemonicParsing="false" onAction="#installFfmpeg" text="Install ffmpeg"/>
+      <Button mnemonicParsing="false" onAction="#quit" text="Quit">
+         <HBox.margin>
+            <Insets left="10.0"/>
+         </HBox.margin>
+         <VBox.margin>
+            <Insets top="10.0"/>
+         </VBox.margin>
+      </Button>
+   </VBox>
+</FlowPane>

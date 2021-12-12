@@ -1,4 +1,5 @@
 .idea
 target
+.rpitvlogs/
 *.iml
 dependency-reduced-pom.xml

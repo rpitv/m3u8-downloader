@@ -1,0 +1,12 @@
+@font-face {
+    src: url("UbuntuCondensed-Regular.ttf");
+}@font-face {
+    src: url("Oswald-Light.ttf");
+}
+
+.ubuntu-condensed {
+    -fx-font-family: 'Ubuntu Condensed';
+}
+.oswald {
+    -fx-font-family: 'Oswald Light';
+}

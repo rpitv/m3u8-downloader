@@ -1,13 +1,13 @@
-package tv.rpi.m3u8.linux;
+package tv.rpi.m3u8.model.linux;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import tv.rpi.m3u8.Main;
-import tv.rpi.m3u8.common.AbstractFfmpegHandler;
-import tv.rpi.m3u8.common.CompressedFileUtil;
+import tv.rpi.m3u8.model.common.AbstractFfmpegHandler;
+import tv.rpi.m3u8.model.common.M3U8FileUtil;
+import tv.rpi.m3u8.model.common.ProgressFeedback;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,53 +31,54 @@ public class LinuxFfmpegHandler extends AbstractFfmpegHandler {
     }
 
     @Override
-    public void install() throws IOException, ArchiveException {
-        System.out.println("Beginning download of ffmpeg...");
+    public void install(ProgressFeedback feedback) throws IOException, ArchiveException {
         Main.LOGGER.info("Beginning download of ffmpeg...");
 
-        final String downloadZipPath = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz";
-        final String destinationFolder = FileUtils.getTempDirectoryPath() + "m3u8/";
-        final File downloadLocation = new File(destinationFolder + "ffmpeg.tar.xz");
-        FileUtils.createParentDirectories(downloadLocation);
-        FileUtils.copyURLToFile(new URL(downloadZipPath), downloadLocation, 30000, 30000); // Connection timeout after 10 seconds
+        final String downloadSourcePath = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz";
+        final String downloadDestinationFolderPath = FileUtils.getTempDirectoryPath() + "m3u8/";
+        final String downloadDestinationPath = downloadDestinationFolderPath + "ffmpeg.tar.xz";
+        final File downloadedFile = M3U8FileUtil.downloadFile(downloadSourcePath, downloadDestinationPath,
+                ((percentage, details) -> feedback.callback(percentage * 0.4, "Downloading ffmpeg...")));
 
-        System.out.println("Download complete. Decompressing...");
+        // ----
+
         Main.LOGGER.info("Download complete. Decompressing...");
 
-        final File decompressedTar = new File(destinationFolder + "ffmpeg.tar");
-        CompressedFileUtil.decompressXz(downloadLocation, decompressedTar);
+        feedback.callback(0.4, "Decompressing...");
+        final File decompressedTar = new File(downloadDestinationFolderPath + "ffmpeg.tar");
+        M3U8FileUtil.decompressXz(downloadedFile, decompressedTar, ((percentage, details) ->
+                feedback.callback(0.4 + 0.25 * percentage, "Decompressing...")));
 
-        System.out.println("Decompressing complete. Unzipping...");
         Main.LOGGER.info("Decompressing complete. Unzipping...");
 
-        final String unzipDestinationPath = destinationFolder + "unzipped";
+        feedback.callback(0.6, "Unzipping...");
+        final String unzipDestinationPath = downloadDestinationFolderPath + "unzipped";
         final File unzipDestination = new File(unzipDestinationPath);
-        CompressedFileUtil.extractArchive(decompressedTar, unzipDestination, ArchiveStreamFactory.TAR);
+        M3U8FileUtil.extractArchive(decompressedTar, unzipDestination, ArchiveStreamFactory.TAR, ((percentage, details) ->
+                feedback.callback(0.65 + 0.25 * percentage, "Unzipping...")));
 
-        System.out.println("Unzipped. Installing...");
         Main.LOGGER.info("Unzipped. Installing...");
 
+        feedback.callback(0.9, "Collecting files...");
         final Collection<File> unzippedFiles = FileUtils.listFilesAndDirs(unzipDestination,
                 TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 
+        feedback.callback(0.95, "Installing...");
         final String installLocationPath = System.getenv("HOME") + "/ffmpeg/";
         final File installLocation = new File(installLocationPath + "bin");
         FileUtils.createParentDirectories(installLocation);
+        float searchedFileCount = 0; // Used for progress bar
         for(final File f : unzippedFiles) {
+            feedback.callback(0.95 + (searchedFileCount / unzippedFiles.size()) * 0.1, "Installing...");
             // We want to install these binary files.
             if(f.getName().equals("ffmpeg") || f.getName().equals("ffprobe")) {
                 FileUtils.copyFile(f, new File(installLocationPath + "/bin/" + f.getName()));
             }
+            searchedFileCount++;
         }
+        feedback.callback(1.0, "Installation complete.");
 
-        System.out.printf("Installation complete at %s. Cleaning up...\n", installLocationPath);
-        Main.LOGGER.info("Installation complete at {}. Cleaning up...", installLocationPath);
-
-        Main.LOGGER.debug("Attempting to delete temporary files at {}.", destinationFolder);
-        boolean wasDeleted = new File(destinationFolder).delete();
-        if(!wasDeleted) {
-            Main.LOGGER.debug("Was not able to delete the temporary files from {}.", destinationFolder);
-        }
+        Main.LOGGER.info("Installation complete at {}.", installLocationPath);
 
         // TODO add to path
     }

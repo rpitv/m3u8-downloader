@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tv.rpi.m3u8.control.MainWindow">
+
+   <VBox fx:id="content" alignment="CENTER" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS"/>
+   <HBox alignment="BOTTOM_LEFT" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" VBox.vgrow="NEVER">
+      <padding>
+         <Insets left="5.0"/>
+      </padding>
+      <Label fx:id="copyright" text="RPI TV © 2021">
+         <HBox.margin>
+            <Insets bottom="2.0"/>
+         </HBox.margin>
+      </Label>
+      <Hyperlink onAction="#openRepo" text="Open Source on GitHub"/>
+   </HBox>
+</VBox>

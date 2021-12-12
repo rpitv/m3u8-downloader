@@ -1,9 +1,8 @@
-package tv.rpi.m3u8.common;
+package tv.rpi.m3u8.model.common;
 
 import org.apache.commons.compress.archivers.ArchiveException;
-import tv.rpi.m3u8.OperatingSystem;
-import tv.rpi.m3u8.linux.LinuxFfmpegHandler;
-import tv.rpi.m3u8.windows.WindowsFfmpegHandler;
+import tv.rpi.m3u8.model.linux.LinuxFfmpegHandler;
+import tv.rpi.m3u8.model.windows.WindowsFfmpegHandler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public abstract class AbstractFfmpegHandler {
     public abstract boolean isFfmpegInstalled() throws IOException, InterruptedException;
     public abstract String getFfmpegPath() throws IOException, InterruptedException;
-    public abstract void install() throws IOException, ArchiveException;
+    public abstract void install(ProgressFeedback feedback) throws IOException, ArchiveException;
 
     protected String getFfmpegPathBase(String cmd, String[] possiblePaths) throws IOException, InterruptedException {
         final Process pathProcess = Runtime.getRuntime().exec(cmd);
