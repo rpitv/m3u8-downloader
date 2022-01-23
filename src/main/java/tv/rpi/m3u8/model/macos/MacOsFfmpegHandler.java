@@ -12,7 +12,6 @@ import tv.rpi.m3u8.model.common.ProgressFeedback;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Collection;
 
 public class MacOsFfmpegHandler extends AbstractFfmpegHandler {
@@ -79,5 +78,10 @@ public class MacOsFfmpegHandler extends AbstractFfmpegHandler {
         Main.LOGGER.info("Installation complete at {}.", installLocationPath);
 
         // TODO add to path
+    }
+
+    @Override
+    public void download(String m3u8, String outputDir, int compressionValue, ProgressFeedback feedback) throws IOException, InterruptedException {
+
     }
 }

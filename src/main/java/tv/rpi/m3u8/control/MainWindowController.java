@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import tv.rpi.m3u8.Main;
+import tv.rpi.m3u8.model.DownloaderScenes;
 import tv.rpi.m3u8.model.common.AbstractFfmpegHandler;
 import tv.rpi.m3u8.model.common.OperatingSystem;
 
@@ -16,16 +17,16 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 
-public class MainWindow {
+public class MainWindowController {
 
     @FXML
     public Label copyright;
     @FXML
     public Pane content;
 
-    public void swapScenes(String path) {
+    public void swapScenes(DownloaderScenes scene) {
         try {
-            final FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            final FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.getPath()));
             final Parent root = loader.load();
             content.getChildren().clear();
             content.getChildren().addAll(root.getChildrenUnmodifiable());
@@ -36,25 +37,25 @@ public class MainWindow {
     }
 
     public void initialize() {
-        Main.mainWindow = this;
+        Main.mainWindowController = this;
         copyright.setText("RPI TV © " + Calendar.getInstance().get(Calendar.YEAR));
 
-        this.swapScenes("/scenes/loading-spinner.fxml");
+        this.swapScenes(DownloaderScenes.LOADING_SPINNER);
 
         final OperatingSystem os = Main.getOperatingSystem();
         final AbstractFfmpegHandler ffmpeg = AbstractFfmpegHandler.getForOperatingSystem(os);
         try {
             if(!ffmpeg.isFfmpegInstalled()) {
                 Main.LOGGER.warn("ffmpeg is not installed!");
-                this.swapScenes("/scenes/noFFmpegInstallation.fxml");
+                this.swapScenes(DownloaderScenes.NO_FFMPEG_INSTALLATION);
             } else {
-                this.swapScenes("/scenes/downloadCollection.fxml");
+                this.swapScenes(DownloaderScenes.DOWNLOAD_INPUT);
             }
         } catch (IOException | InterruptedException e) {
             Main.LOGGER.fatal("Failed to locate ffmpeg.");
             Main.logThrowable(e);
             Main.errorMessageToDisplay = "Failed to locate ffmpeg.";
-            this.swapScenes("/scenes/error.fxml");
+            this.swapScenes(DownloaderScenes.ERROR);
         }
     }
 

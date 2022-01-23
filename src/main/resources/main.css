@@ -1,0 +1,39 @@
+* {
+    -jfx-focus-color: #B73535;
+}
+
+.jfx-button.disabled, .jfx-button.disabled:hover, .jfx-button.disabled:focused {
+    -fx-text-fill: #999999;
+    -fx-font-style: italic;
+    -fx-cursor: DEFAULT;
+    -fx-background-color: #dddddd;
+    -fx-effect: NONE;
+    -jfx-disable-visual-focus: true;
+}
+
+.jfx-spinner .arc {
+    -fx-stroke: #B73535;
+}
+
+.jfx-button {
+    -jfx-button-type: RAISED;
+    -fx-background-color: #B73535;
+    -fx-text-fill: white;
+    padding: 10;
+}
+.jfx-progress-bar > .bar {
+    -fx-background-color: #B73535;
+    -fx-padding: 3;
+}
+.beginDownloadButton {
+    -fx-font-size: 16;
+}
+
+/* Styling the animated thumb */
+.jfx-slider > .animated-thumb, .jfx-slider > .colored-track, .jfx-slider > .thumb {
+    -fx-background-color: #B73535;
+}
+
+ProgressBar {
+    -fx-accent: #B73535;
+}

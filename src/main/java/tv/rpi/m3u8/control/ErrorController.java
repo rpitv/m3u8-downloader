@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import tv.rpi.m3u8.Main;
 
-public class Error {
+public class ErrorController {
 
     @FXML
     public Label errorMsg;

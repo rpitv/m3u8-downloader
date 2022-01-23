@@ -1,12 +1,16 @@
 @font-face {
-    src: url("UbuntuCondensed-Regular.ttf");
-}@font-face {
-    src: url("Oswald-Light.ttf");
+    src: url("ReadexPro-Regular.ttf");
+}
+@font-face {
+    src: url("Roboto-Regular.ttf");
+}
+@font-face {
+    src: url("Roboto-Italic.ttf");
 }
 
-.ubuntu-condensed {
-    -fx-font-family: 'Ubuntu Condensed';
+.readex-pro {
+    -fx-font-family: 'Readex Pro Regular';
 }
-.oswald {
-    -fx-font-family: 'Oswald Light';
+.roboto {
+    -fx-font-family: 'Roboto';
 }

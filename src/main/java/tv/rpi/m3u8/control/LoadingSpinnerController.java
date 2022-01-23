@@ -1,16 +1,14 @@
 package tv.rpi.m3u8.control;
 
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 
-public class LoadingSpinner {
+public class LoadingSpinnerController {
 
     @FXML
     public ImageView spinner;

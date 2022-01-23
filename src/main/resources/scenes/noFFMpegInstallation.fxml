@@ -7,24 +7,25 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
 <FlowPane alignment="CENTER" columnHalignment="CENTER" xmlns="http://javafx.com/javafx/8"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="tv.rpi.m3u8.control.NoFFmpegInstallation">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="tv.rpi.m3u8.control.NoFFMpegInstallationController">
    <VBox alignment="CENTER">
-      <Label styleClass="oswald" prefHeight="150.0" prefWidth="200.0"
+      <Label styleClass="readex-pro-light" prefHeight="150.0" prefWidth="200.0"
              text="We weren't able to find an ffmpeg installation on this computer. Would you like us to attempt to install it?"
              textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="18.0"/>
+            <Font size="16.0"/>
          </font>
       </Label>
-      <Button mnemonicParsing="false" onAction="#installFfmpeg" text="Install ffmpeg"/>
-      <Button mnemonicParsing="false" onAction="#quit" text="Quit">
+      <JFXButton onAction="#installFfmpeg" text="INSTALL"/>
+      <JFXButton onAction="#quit" text="QUIT">
          <HBox.margin>
             <Insets left="10.0"/>
          </HBox.margin>
          <VBox.margin>
             <Insets top="10.0"/>
          </VBox.margin>
-      </Button>
+      </JFXButton>
    </VBox>
 </FlowPane>

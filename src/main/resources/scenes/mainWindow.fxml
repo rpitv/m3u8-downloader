@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="tv.rpi.m3u8.control.MainWindow">
+      fx:controller="tv.rpi.m3u8.control.MainWindowController">
 
    <VBox fx:id="content" alignment="CENTER" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS"/>
    <HBox alignment="BOTTOM_LEFT" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" VBox.vgrow="NEVER">

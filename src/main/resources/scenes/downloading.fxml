@@ -9,8 +9,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="tv.rpi.m3u8.control.InstallingController">
-   <Label fx:id="label" styleClass="readex-pro" text="Downloading ffmpeg..." textAlignment="CENTER" wrapText="true">
+      fx:controller="tv.rpi.m3u8.control.DownloadingController">
+   <Label fx:id="label" styleClass="readex-pro" text="Downloading..." textAlignment="CENTER" wrapText="true">
       <font>
          <Font size="30.0"/>
       </font>
@@ -20,6 +20,6 @@
       <padding>
          <Insets top="15" />
       </padding>
-      <JFXButton fx:id="continueButton" onAction="#doContinue" text="CONTINUE"/>
+      <JFXButton fx:id="goBackButton" onAction="#goBack" text="GO BACK"/>
    </VBox>
 </Pane>

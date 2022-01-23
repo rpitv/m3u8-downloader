@@ -8,8 +8,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
-<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tv.rpi.m3u8.control.Error">
-   <Label styleClass="oswald" text="Error!" textAlignment="CENTER" wrapText="true">
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tv.rpi.m3u8.control.ErrorController">
+   <Label styleClass="readex-pro" text="Error!" textAlignment="CENTER" wrapText="true">
       <font>
          <Font size="40.0"/>
       </font>
@@ -17,7 +17,7 @@
    <ImageView>
       <Image url="@../images/error.png" requestedWidth="100" requestedHeight="100"/>
    </ImageView>
-   <Label prefWidth="300.0" text="Something went wrong and we couldn't recover. Ask a developer for more assistance."
+   <Label prefWidth="300.0" text="Something went wrong and we didn't know what to do. Ask a developer for more assistance, if needed."
           textAlignment="CENTER" wrapText="true">
       <font>
          <Font size="20.0"/>
